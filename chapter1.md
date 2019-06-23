@@ -10,3 +10,22 @@ cors是前端的常见问题。比如在localhost:9000开放了http server，你
 
 如果有一个前端，无论如何要调用一个rpc协议，但是rpc server没有处理好cors的option请求。这个时候有一个绕过的方法：多写个能处理cors的后端（express）。前端访问后端，走cors。后端访问rpc，因为不在浏览器环境里，所以没有option请求包。
 
+把后端和前端写在同一个端口可能需要对项目结构做出巨大的改变。如果想省事，后端开在9000，前端开在3000，而且后端和前端之间使用同源策略，可以在前端的package.json中加上这句
+
+```
+ "proxy": "http://127.0.0.1:9000/"
+```
+
+然后我们前端的 url 我们可以更加简短
+
+```
+        var url = "/api/create"
+        fetch(url,{
+                method:'POST',
+                body:...
+        }).then()
+
+```
+
+
+
