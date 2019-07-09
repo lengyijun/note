@@ -8,11 +8,7 @@ server-router: express router, beego router
 
 \`serve -s build\` 其中serve是一个nodejs的包,可以用yarn安装一下.
 
-
-
-
-
-
+---
 
 不过后端还是终有一天要和前端合并在一起的.
 
