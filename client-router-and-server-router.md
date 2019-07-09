@@ -16,3 +16,5 @@ server-router: express router, beego router
 
 我们显然希望还是从前端控制,因为如果从后端控制,岂不是所有的前端的代码都得用html重新写一遍.现在还有谁会写原生的html代码和css代码.
 
+好在express和beego都能支持server router和client router同时存在.
+
