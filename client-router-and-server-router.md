@@ -28,5 +28,18 @@ app.get('*', (req, res) => {
 });
 ```
 
+```go
+
+//在beego中,也是加一条通配的路由
+//前两条是api的路由
+
+func init() {
+	beego.Router("/stake/apply", &controllers.StakeController{}, "get:Apply")
+	beego.Router("/stake/list", &controllers.StakeController{}, "get:GetList")
+	
+	beego.Router("*", &controllers.MainController{})
+}
+```
+
 
 
