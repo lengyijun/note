@@ -18,3 +18,15 @@ server-router: express router, beego router
 
 好在express和beego都能支持server router和client router同时存在.
 
+我们在express的router最后加上通配符,那么express本身不解析success路由,还是交给前端处理路由.index.html就是react编译出来的html
+
+```js
+// All expressjs routes
+// then
+app.get('*', (req, res) => {                       
+  res.sendFile(path.resolve(__dirname, 'the path to your react project', 'index.html'));                               
+});
+```
+
+
+
