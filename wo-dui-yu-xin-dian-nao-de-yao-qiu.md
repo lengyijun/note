@@ -10,5 +10,7 @@ i7/i9 CPU
 
 enter和backspace必须在最右边
 
+typeC 
 
+180可折叠
 
