@@ -34,3 +34,11 @@ cors是前端的常见问题。比如在localhost:9000开放了http server，你
 
 
 
+如果后端一时半会儿无法支持,也可以通过修改浏览器的配置来绕过cors
+
+```
+google-chrome --disable-web-security --user-data-dir
+```
+
+
+
