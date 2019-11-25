@@ -10,7 +10,9 @@ i7/i9 CPU
 
 enter和backspace必须在最右边
 
-typeC 
+typeC
 
 180可折叠
+
+有显示音量的键盘灯
 
