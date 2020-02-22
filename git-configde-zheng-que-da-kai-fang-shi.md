@@ -1,24 +1,3 @@
-作者：汪小九
-
-  
-
-
-链接：https://www.zhihu.com/question/27159393/answer/141047266
-
-  
-
-
-来源：知乎
-
-  
-
-
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-
-  
-
-
-  
 
 
 1.首先第一步前提是已经打开了SS代理。
@@ -65,7 +44,6 @@ git clone git@github.com:xxxxxx/xxxxxx.git
 ```
 git config --global http.https://github.com.proxy https://127.0.0.1:1080
 git config --global https.https://github.com.proxy https://127.0.0.1:1080
-
 ```
 
 同时，如果在输入这条命令之前，已经输入全局代理的话，可以输入进行取消
@@ -75,5 +53,13 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
+---
 
+作者：汪小九
+
+链接：[https://www.zhihu.com/question/27159393/answer/141047266](https://www.zhihu.com/question/27159393/answer/141047266)
+
+来源：知乎
+
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
