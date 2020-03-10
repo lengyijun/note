@@ -18,3 +18,5 @@ typeC
 
 对ubuntu支持比较好
 
+thinkpad E系列不是ThinkPad，对linux支持不好
+
