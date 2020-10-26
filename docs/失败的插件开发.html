@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>client router &amp; server router - note</title>
+        <title>失败的插件开发.md - note</title>
         
         
 
@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html" class="active"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发.md</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html" class="active"><strong aria-hidden="true">12.</strong> 失败的插件开发.md</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -159,49 +159,81 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#client-router--server-router" id="client-router--server-router">Client Router &amp; Server Router</a></h1>
-<p>client router: react-dom-router</p>
-<p>server-router: express router, beego router</p>
-<p>当我们先用react开发单页面应用的时候,一般会使用react-router这种简单的router来控制.接下去我们会npm run build,把react编译成原生的html,css和javascript.这种文件可以用`python -m SimpleHTTPServer` 来启动,也可以</p>
-<p>`serve -s build` 其中serve是一个nodejs的包,可以用yarn安装一下.</p>
-<hr />
-<p>不过后端还是终有一天要和前端合并在一起的.这个时候会出现路由从哪里找这个问题:比如localhost:300/success</p>
-<p>这个路由可以由前端控制,也有可能从后端控制.</p>
-<p>我们显然希望还是从前端控制,因为如果从后端控制,岂不是所有的前端的代码都得用html重新写一遍.现在还有谁会写原生的html代码和css代码.</p>
-<p>好在express和beego都能支持server router和client router同时存在.</p>
-<p>我们在express的router最后加上通配符,那么express本身不解析success路由,还是交给前端处理路由.index.html就是react编译出来的html</p>
-<pre><code class="language-js">// All expressjs routes
-// then
-app.get('*', (req, res) =&gt; {                       
-  res.sendFile(path.resolve(__dirname, 'the path to your react project', 'index.html'));                               
-});
-</code></pre>
-<pre><code class="language-go">
-//在beego中,也是加一条通配的路由
-//前两条是api的路由
+                        <h1><a class="header" href="#记一个失败的插件开发" id="记一个失败的插件开发">记一个失败的插件开发</a></h1>
+<p>最近查看如何下载oc.sjtu.edu.cn上的视频. 我F12查看media的下载,然后复制成curl,用curl下载视频</p>
+<pre><code class="language-bash">curl 'https://live.sjtu.edu.cn/vod/31011200112000000000/31011200111320002428/0_1603701640-1603704941.mp4?key=1603774970-1-1a0ff9b1c95a48e363ab7b990a195069' \
+  -H 'Connection: keep-alive' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36' \
+  -H 'Accept: */*' \
+  -H 'Origin: https://courses.sjtu.edu.cn' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Dest: video' \
+  -H 'Referer: https://courses.sjtu.edu.cn/' \
+  -H 'Accept-Language: en,zh-CN;q=0.9,zh;q=0.8' \
+  -H 'Range: bytes=196608-'  --output b.mp4
 
-func init() {
-	beego.Router(&quot;/stake/apply&quot;, &amp;controllers.StakeController{}, &quot;get:Apply&quot;)
-	beego.Router(&quot;/stake/list&quot;, &amp;controllers.StakeController{}, &quot;get:GetList&quot;)
-	
-	beego.Router(&quot;*&quot;, &amp;controllers.MainController{})
-}
 </code></pre>
+<p>如果用js的fetch:</p>
+<pre><code class="language-javascript">
+</code></pre>
+<p>看上去很简单,不过有两个需要注意的点:</p>
+<ol>
+<li>referer是 <code>https://courses.sjtu.edu.cn</code></li>
+<li>用curl的时候,range是从0开始.比如上文这个我就写错了,下载下来也没用.</li>
+</ol>
+<p>但是我感觉,大多数人电脑上是搞不定用curl的.会想起大一用的选课插件,我决定用插件搞定oc视频下载.</p>
+<p>我以前下载视频主要用youtube-dl,再不济用代下载网站,比如<a href="https://weibo.iiilab.com/"> 微博、秒拍、小咖秀、晃咖视频解析下载 - 保存视频到电脑、手机</a> . 用浏览器的插件下载我很少用.</p>
+<p>我没打算自己从头写,而是打算改一改.在github我没找到好的实现,于是我先去chrome webstore上找了一个视频下载的插件.由于chrome的crx现在不会保存,会自动删除,所以我先装了一个专门用来下载crx的插件.</p>
+<p>下载下来的crx有压缩和混淆,好在格式化一下还能看得懂</p>
+<p>chrome extension里面改referer要这样改:</p>
+<pre><code class="language-javascript">// snippet 1       
+chrome.webRequest.onBeforeSendHeaders.addListener(a =&gt; {
+            if (&quot;GET&quot; === a.method) {
+                const b = a.requestHeaders.findIndex(x =&gt; &quot;referer&quot; === x.name.toLowerCase());
+                if (b === -1) {
+                    a.requestHeaders.push({
+                        name: &quot;referer&quot;,
+                        value: &quot;https://courses.sjtu.edu.cn/&quot;
+                    })
+                } else {
+                    a[b].value = &quot;https://courses.sjtu.edu.cn/&quot;;
+                }
+            }
+            return {requestHeaders: a.requestHeaders}
+        }, {urls: [&quot;*://oc.sjtu.edu.cn/*&quot;, &quot;*://live.sjtu.edu.cn/*&quot;]}, [&quot;blocking&quot;, &quot;requestHeaders&quot;, &quot;extraHeaders&quot;])
+</code></pre>
+<p>这样改,对于fetch就已经生效了.如果我们下载的不是视频,而是图片,这样就已经可以了.</p>
+<p>但是视频下载时间很随缘.一个45分钟的mp4,有时要下载10分钟,有时要下载40分钟.fetch不会显示进度条,只会在后台下载,所以特别对用户不友好.而想要用chrome自带的下载,需要调用</p>
+<pre><code class="language-javascript">chrome.downloads.download({
+            url: b,
+            filename: a,
+            method: &quot;GET&quot;,
+            headers: [
+                // {
+                //     name: &quot;referer&quot;,
+                //     value: &quot;https://courses.sjtu.edu.cn/&quot;
+                // }
+            ]
+        }, a =&gt; {
+            console.log(a)
+        })
+</code></pre>
+<p>但是,snippet 1中修改referer对于chrome.downloads是不奏效的.</p>
+<p>我查了一下这个问题, 在 https://stackoverflow.com/questions/20579112/send-referrer-header-with-chrome-downloads-api 上有谈论.但是解决方法同样只适用于较小的图片,像视频这么大的,还是不合适.因为不能静默的下载这么大的东西</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="cors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="Tantivy迁移SGX总结.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -211,15 +243,11 @@ func init() {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="cors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="Tantivy迁移SGX总结.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

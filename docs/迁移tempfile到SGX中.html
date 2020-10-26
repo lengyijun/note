@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>git config的正确打开方式 - note</title>
+        <title>迁移tempfile到SGX中 - note</title>
         
         
 
@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">3.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">4.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">5.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="git-configde-zheng-que-da-kai-fang-shi.html" class="active"><strong aria-hidden="true">6.</strong> git config的正确打开方式</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">7.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">8.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">9.</strong> mmap</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html" class="active"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发.md</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -159,52 +159,76 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>1.首先第一步前提是已经打开了SS代理。</p>
-<p>2.如果要设置全局代理，可以依照这样设置</p>
-<pre><code>git config --global http.proxy http://127.0.0.1:1080
-git config --global https.proxy https://127.0.0.1:1080
+                        <h1><a class="header" href="#迁移tempfile到sgx中" id="迁移tempfile到sgx中">迁移tempfile到sgx中</a></h1>
+<p>首先下载源码：</p>
+<pre><code>git clone https://github.com/Stebalien/tempfile
 </code></pre>
-<p><strong>但请注意，需要查看自己的端口是不是也是1080，可以打开你的SS查看代理设置</strong></p>
-<p><img src="https://pic2.zhimg.com/50/v2-1d5b863661c5fbce60ed104752ddda4e_hd.jpg" alt="" /></p>
-<p><img src="https://pic2.zhimg.com/80/v2-1d5b863661c5fbce60ed104752ddda4e_hd.jpg" alt="" /></p>
-<p>如图所示，我的监听端口就是1087，所以我需要把后面的1080改成1087</p>
-<p>3.完成上面一步后，此时输入git clone xxxxxxx就可以利用代理进行下载了</p>
-<p><strong>但同时，也请注意，这里指的是https协议，也就是</strong></p>
-<pre><code>git clone https://www.github.com/xxxx/xxxx.git
+<p>忽略windows下的特定依赖。忽视devdependency。
+tempfile只有两个依赖remove_dir_all和rand需要处理，所幸这两个依赖都不难处理。</p>
+<h2><a class="header" href="#处理remove_dir_all" id="处理remove_dir_all">处理remove_dir_all</a></h2>
+<p>remove_dir_all只是一个跨平台的封装.我们把这个依赖去掉,用<code>std::remove_dir_all</code>代替即可</p>
+<h2><a class="header" href="#处理rand" id="处理rand">处理rand</a></h2>
+<p>这个直接改成 https://github.com/mesalock-linux/rand-sgx</p>
+<h2><a class="header" href="#处理libc" id="处理libc">处理libc</a></h2>
+<p>首先把Cargo.toml中的libc依赖去掉</p>
+<p>加入下面这段</p>
+<pre><code>[target.'cfg(not(target_env = &quot;sgx&quot;))'.dependencies]
+sgx_tstd = { version = &quot;1.0&quot;, rev = &quot;v1.1.2&quot;, git = &quot;https://github.com/apache/teaclave-sgx-sdk.git&quot;, features=[&quot;untrusted_fs&quot;,&quot;thread&quot;, &quot;backtrace&quot;] }
+sgx_libc = { version = &quot;1.0&quot;, rev = &quot;v1.1.2&quot;, git = &quot;https://github.com/apache/teaclave-sgx-sdk.git&quot; }
+
 </code></pre>
-<p>这种</p>
-<p>对于SSH协议，也就是</p>
-<pre><code>git clone git@github.com:xxxxxx/xxxxxx.git
+<p>在<code>src/lib.rs</code>的开头写</p>
+<pre><code>#![no_std]
+use std::prelude::v1::*;
+#[macro_use]
+extern crate sgx_tstd as std;
+extern crate sgx_libc as libc;
 </code></pre>
-<p>这种，依旧是无效的</p>
-<p><strong>4.以上为总结，但我不推荐直接用全局代理</strong></p>
-<p>因为如果挂了全局代理，这样如果需要克隆coding之类的国内仓库，会奇慢无比</p>
-<p>所以我建议使用这条命令，只对github进行代理，对国内的仓库不影响</p>
-<pre><code>git config --global http.https://github.com.proxy https://127.0.0.1:1080
-git config --global https.https://github.com.proxy https://127.0.0.1:1080
+<p>到这一步,<code>cargo b</code> 一下.会看到一堆错误</p>
+<pre><code>error[E0432]: unresolved imports `libc::link`, `libc::rename`, `libc::unlink`
+  --&gt; src/file/imp/unix.rs:11:27
+   |
+11 | use libc::{c_char, c_int, link, rename, unlink};
+   |                           ^^^^  ^^^^^^  ^^^^^^ no `unlink` in the root
+   |                           |     |
+   |                           |     no `rename` in the root
+   |                           no `link` in the root
+
 </code></pre>
-<p>同时，如果在输入这条命令之前，已经输入全局代理的话，可以输入进行取消</p>
-<pre><code>git config --global --unset http.proxy
-git config --global --unset https.proxy
+<p>首先是这个link找不到的问题,需要该一下路径</p>
+<pre><code>use libc::{c_char, c_int};
+use libc::ocall::{link, rename, unlink};
 </code></pre>
-<hr />
-<p>作者：汪小九</p>
-<p>链接：<a href="https://www.zhihu.com/question/27159393/answer/141047266">https://www.zhihu.com/question/27159393/answer/141047266</a></p>
-<p>来源：知乎</p>
-<p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>然后是</p>
+<pre><code>64 |     use libc::{EISDIR, ENOENT, EOPNOTSUPP, O_EXCL, O_TMPFILE};
+   |                                                    ^^^^^^^^^ no `O_TMPFILE` in the root
+
+</code></pre>
+<p>这里没办法,只能不用<code>O_TMPFILE</code>了</p>
+<p>最后是</p>
+<pre><code>error: duplicate lang item in crate `std`: `f32_runtime`.
+  |
+  = note: the lang item is first defined in crate `sgx_tstd` (which `tempfile` depends on)
+
+</code></pre>
+<p>需要把每一个rs文件的开头都加上</p>
+<pre><code>use std::prelude::v1::*;
+</code></pre>
+<p>虽然不是每个文件都必要加,但我也分不清哪些需要,所有都加了,也没关系</p>
+<p>现在<code>cargo b</code>应该就不会报错了</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="client-router-and-server-router.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="sgx编译.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="Tantivy迁移SGX总结.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -216,13 +240,13 @@ git config --global --unset https.proxy
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="client-router-and-server-router.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="sgx编译.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="Tantivy迁移SGX总结.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -230,21 +254,6 @@ git config --global --unset https.proxy
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

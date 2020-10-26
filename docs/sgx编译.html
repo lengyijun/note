@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>client router &amp; server router - note</title>
+        <title>sgx在ubuntu上编译 - note</title>
         
         
 
@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html" class="active"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发.md</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html" class="active"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发.md</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -159,33 +159,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#client-router--server-router" id="client-router--server-router">Client Router &amp; Server Router</a></h1>
-<p>client router: react-dom-router</p>
-<p>server-router: express router, beego router</p>
-<p>当我们先用react开发单页面应用的时候,一般会使用react-router这种简单的router来控制.接下去我们会npm run build,把react编译成原生的html,css和javascript.这种文件可以用`python -m SimpleHTTPServer` 来启动,也可以</p>
-<p>`serve -s build` 其中serve是一个nodejs的包,可以用yarn安装一下.</p>
-<hr />
-<p>不过后端还是终有一天要和前端合并在一起的.这个时候会出现路由从哪里找这个问题:比如localhost:300/success</p>
-<p>这个路由可以由前端控制,也有可能从后端控制.</p>
-<p>我们显然希望还是从前端控制,因为如果从后端控制,岂不是所有的前端的代码都得用html重新写一遍.现在还有谁会写原生的html代码和css代码.</p>
-<p>好在express和beego都能支持server router和client router同时存在.</p>
-<p>我们在express的router最后加上通配符,那么express本身不解析success路由,还是交给前端处理路由.index.html就是react编译出来的html</p>
-<pre><code class="language-js">// All expressjs routes
-// then
-app.get('*', (req, res) =&gt; {                       
-  res.sendFile(path.resolve(__dirname, 'the path to your react project', 'index.html'));                               
-});
+                        <h1><a class="header" href="#compile-intel-sgx-sdk-on-ubuntu2004" id="compile-intel-sgx-sdk-on-ubuntu2004">Compile intel SGX sdk on ubuntu20.04</a></h1>
+<h2><a class="header" href="#apt" id="apt">Apt</a></h2>
+<pre><code class="language-bash">sudo apt install build-essential ocaml ocamlbuild automake autoconf libtool wget python libssl-dev git cmake perl libssl-dev libcurl4-openssl-dev protobuf-compiler libprotobuf-dev debhelper cmake reprepro unzip
 </code></pre>
-<pre><code class="language-go">
-//在beego中,也是加一条通配的路由
-//前两条是api的路由
+<h2><a class="header" href="#sdk-install" id="sdk-install">sdk install</a></h2>
+<p>If master is not stable,try download from release</p>
+<pre><code class="language-bash">export DEB_BUILD_OPTIONS=&quot;nostrip&quot;
+make preparation
+sudo cp external/toolset/ubuntu20.04/{as,ld,ld.gold,objdump} /usr/local/bin
+make sdk USE_OPT_LIBS=0 -j 8 #DEBUG=1
+make sdk_install_pkg -j 8 #DEBUG=1
+./linux/installer/bin/sgx_linux_x64_sdk_2.10.100.2.bin
+</code></pre>
+<p>我们需要安装在两个位置<code>/opt</code>和<code>/opt/intel</code>, 不要安装在本目录 . 输入填 <code>/opt</code> ,然后把 <code>/opt/sgxsdk</code> 和 <code>/opt/intel/sgxsdk</code> 软链接在一起</p>
+<p><code>DEBUG=1</code>  是optional的,一般不需要</p>
+<h2><a class="header" href="#psw-install" id="psw-install">psw install</a></h2>
+<pre><code class="language-bash">export DEB_BUILD_OPTIONS=&quot;nostrip&quot;
+make psw -j 8 #DEBUG=1
+make deb_psw_pkg -j 8 #DEBUG=1
+sudo make deb_local_repo -j 8
+</code></pre>
+<p>append to <code>/etc/apt/source.list</code></p>
+<pre><code>deb [trusted=yes arch=amd64] file:/home/lyj/linux-sgx-sgx_2.10/linux/installer/deb/local_repo_tool/../sgx_debian_local_repo focal main
+</code></pre>
+<pre><code class="language-bash">sudo apt update
+sudo apt install libsgx-ae-epid libsgx-ae-le libsgx-ae-pce libsgx-ae-qe3 libsgx-ae-qve libsgx-aesm-ecdsa-plugin libsgx-aesm-epid-plugin libsgx-aesm-launch-plugin libsgx-aesm-pce-plugin libsgx-aesm-quote-ex-plugin libsgx-dcap-default-qpl-dev libsgx-dcap-default-qpl libsgx-dcap-ql-dev libsgx-dcap-ql libsgx-enclave-common-dbgsym libsgx-enclave-common-dev libsgx-enclave-common libsgx-epid-dev libsgx-epid libsgx-launch-dev libsgx-launch libsgx-pce-logic libsgx-qe3-logic libsgx-quote-ex-dev libsgx-quote-ex libsgx-uae-service libsgx-urts-dbgsym libsgx-urts sgx-aesm-service 
+</code></pre>
+<pre><code class="language-bash"># optional
+sudo apt install sgx-dcap-pccs
+</code></pre>
+<h2><a class="header" href="#build-sgx-gdb" id="build-sgx-gdb">build sgx-gdb</a></h2>
+<p>sgx-gdb依赖老版本的gdb. </p>
+<p>download gdb-9.1</p>
+<pre><code class="language-bash">wget https://ftp.gnu.org/gnu/gdb/gdb-9.1.tar.xz
+extract gdb-9.1.tar.xz
+cd gdb-9.1
+mkdir build
+cd build 
+../configure --with-python=/usr/bin/python3 --prefix=/opt/gdb-9.1
+make
+sudo make install
+</code></pre>
+<p>modify <code>which sgx-gdb</code> , redirect GDB to /opt/gdb-9.1/bin/gdb</p>
+<h2><a class="header" href="#test" id="test">test</a></h2>
+<pre><code class="language-bash">cd ~/linux-sgx-sgx_2.10/SampleCode/SampleEnclave
+make clean &amp;&amp; make
+sgx-gdb ./app
 
-func init() {
-	beego.Router(&quot;/stake/apply&quot;, &amp;controllers.StakeController{}, &quot;get:Apply&quot;)
-	beego.Router(&quot;/stake/list&quot;, &amp;controllers.StakeController{}, &quot;get:GetList&quot;)
-	
-	beego.Router(&quot;*&quot;, &amp;controllers.MainController{})
-}
+set debug-file-directory /usr/lib/debug
+enable sgx_emmt
+run
+</code></pre>
+<p>you should see when finished</p>
+<pre><code>  [Peak stack used]: 15 KB
+  [Peak heap used]:  12 KB
+  [Peak reserved memory used]:  0 KB
+
+</code></pre>
+<h2><a class="header" href="#after-installation" id="after-installation">After installation</a></h2>
+<pre><code>sudo rm /usr/local/bin/{as,ld,ld.gold,objdump}
 </code></pre>
 
                     </main>
@@ -193,13 +226,13 @@ func init() {
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="cors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="mmap.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="迁移tempfile到SGX中.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -211,13 +244,13 @@ func init() {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="cors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="mmap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="迁移tempfile到SGX中.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
