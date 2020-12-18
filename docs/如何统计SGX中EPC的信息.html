@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>如何在docker build的时候翻墙 - note</title>
+        <title>如何统计SGX中EPC的信息 - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="active"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">13.</strong> 组合数与排列数</a></li><li class="chapter-item expanded "><a href="如何统计SGX中EPC的信息.html"><strong aria-hidden="true">14.</strong> 如何统计SGX中EPC的信息</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="wo-men-dui-bi-ji-ruan-jian-de-yao-qiu.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="sgx编译.html"><strong aria-hidden="true">9.</strong> sgx在ubuntu上编译</a></li><li class="chapter-item expanded "><a href="迁移tempfile到SGX中.html"><strong aria-hidden="true">10.</strong> 迁移tempfile到SGX中</a></li><li class="chapter-item expanded "><a href="Tantivy迁移SGX总结.html"><strong aria-hidden="true">11.</strong> Tantivy迁移SGX总结</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">12.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">13.</strong> 组合数与排列数</a></li><li class="chapter-item expanded "><a href="如何统计SGX中EPC的信息.html" class="active"><strong aria-hidden="true">14.</strong> 如何统计SGX中EPC的信息</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,30 +163,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>遇到要dockerfile里面要安装go依赖,一般就比较麻烦</p>
-<p>我的方案是</p>
-<p>安装brook</p>
-<pre><code class="language-asciidoc">brook socks5tohttp -l 0.0.0.0:8080 -s 127.0.0.1:1080
+                        <h1><a class="header" href="#如何统计sgx中epc的信息" id="如何统计sgx中epc的信息">如何统计SGX中EPC的信息</a></h1>
+<p>我们一般用htop来看系统负载。但是在SGX中，却缺少原生的工具。</p>
+<p>后来我找到这个</p>
+<p>https://fortanix.com/blog/2020/02/monitoring-intel-sgx-enclaves/</p>
+<p>要运行这个，首先需要重新编译linux-sgx-driver。</p>
+<p>源代码在 <a href="https://github.com/fortanix/linux-sgx-driver">www.github.com/fortanix/linux-sgx-driver</a> </p>
+<p>不过年旧失修，你是跑不起来的。需要这样做</p>
+<pre><code class="language-bash">cd
+git clone https://github.com/fortanix/linux-sgx-driver fortanix-linux-sgx-driver 
+cd  fortanix-linux-sgx-driver 
+git diff HEAD~ &gt; /tmp/a.diff
 
-export http_proxy=172.17.0.1:8080 
-export https_proxy=172.17.0.1:8080 
+cd 
+git clone https://github.com/intel/linux-sgx-driver
+cd linux-sgx-driver
+git apply --3way /tmp/a.diff
+
+# 然后按照 linux-sgx-driver 的正常步骤安装driver
 </code></pre>
-<p>然后就好了</p>
+<p>可能有些merge错误，需要自己处理一下，就不赘述了。</p>
+<p>新的driver会创建两个文件 <code>/proc/sgx_enclaves</code> 和 <code>/proc/sgx_stats</code> </p>
+<p>可以用这个命令监控文件的变化</p>
+<pre><code class="language-bash">watch cat /proc/sgx_enclaves
+watch cat /proc/sgx_stats
+</code></pre>
+<p>不过每个字段的含义你并看不懂，所以他还做了一层封装，达到类似与top的输出。 代码在 <a href="https://github.com/fortanix/sgxtop">www.github.com/fortanix/sgxtop</a> </p>
+<p>按照Readme编译就行了</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="client-router-and-server-router.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="permutation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="requirement_of_pc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -196,15 +210,11 @@ export https_proxy=172.17.0.1:8080
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="client-router-and-server-router.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="permutation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="requirement_of_pc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

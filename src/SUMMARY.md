@@ -11,4 +11,6 @@
 * [sgx在ubuntu上编译](sgx编译.md)
 * [迁移tempfile到SGX中](迁移tempfile到SGX中.md)
 * [Tantivy迁移SGX总结](Tantivy迁移SGX总结.md)
-* [失败的插件开发.md](失败的插件开发.md)
+* [失败的插件开发](失败的插件开发.md)
+* [组合数与排列数](permutation.md)
+* [如何统计SGX中EPC的信息](如何统计SGX中EPC的信息.md)
