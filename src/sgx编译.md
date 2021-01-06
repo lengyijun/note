@@ -1,12 +1,26 @@
 # Compile intel SGX sdk on ubuntu20.04
 
+## Pre-check
+Use the following tool to check whether your machine supports SGX.
+```link
+https://github.com/ayeks/SGX-hardware
+```
+Besides, make sure that you have disabled secure boot in BIOS and enable SGX, follow the manual
+```link
+https://community.intel.com/t5/Intel-Software-Guard-Extensions/installing-SGX-driver-for-ubuntu/td-p/1094996
+```
+
 ## Apt
 
 ```bash
 sudo apt install build-essential ocaml ocamlbuild automake autoconf libtool wget python libssl-dev git cmake perl libssl-dev libcurl4-openssl-dev protobuf-compiler libprotobuf-dev debhelper cmake reprepro unzip
 ```
 
-
+## Driver install
+from the following link
+```link
+https://github.com/intel/linux-sgx-driver
+```
 
 ## sdk install
 
@@ -29,6 +43,7 @@ make sdk_install_pkg -j 8 #DEBUG=1
 
 ## psw install
 ```bash
+make clean
 export DEB_BUILD_OPTIONS="nostrip"
 make psw -j 8 #DEBUG=1
 make deb_psw_pkg -j 8 #DEBUG=1
@@ -40,7 +55,7 @@ append to `/etc/apt/source.list`
 ```
 deb [trusted=yes arch=amd64] file:/home/lyj/linux-sgx-sgx_2.10/linux/installer/deb/local_repo_tool/../sgx_debian_local_repo focal main
 ```
-
+if it is Ubuntu 18.04, change `focal` to `bionic`
 ```bash
 sudo apt update
 sudo apt install libsgx-ae-epid libsgx-ae-le libsgx-ae-pce libsgx-ae-qe3 libsgx-ae-qve libsgx-aesm-ecdsa-plugin libsgx-aesm-epid-plugin libsgx-aesm-launch-plugin libsgx-aesm-pce-plugin libsgx-aesm-quote-ex-plugin libsgx-dcap-default-qpl-dev libsgx-dcap-default-qpl libsgx-dcap-ql-dev libsgx-dcap-ql libsgx-enclave-common-dbgsym libsgx-enclave-common-dev libsgx-enclave-common libsgx-epid-dev libsgx-epid libsgx-launch-dev libsgx-launch libsgx-pce-logic libsgx-qe3-logic libsgx-quote-ex-dev libsgx-quote-ex libsgx-uae-service libsgx-urts-dbgsym libsgx-urts sgx-aesm-service 
