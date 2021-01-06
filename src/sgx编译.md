@@ -111,3 +111,9 @@ you should see when finished
 sudo rm /usr/local/bin/{as,ld,ld.gold,objdump}
 ```
 
+
+## 关于发行版的选择
+linux-sgx需要特定的as ld ld.gold文件，并且没有提供源码，导致只能下载其预编译好的binary
+intel只提供了ubuntu LTS版本的binary,即18.04 20.04。 
+对于20.10这种非LTS,目前难以安装sgx环境
+至于Arch,那就更不用想了
