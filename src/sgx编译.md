@@ -43,7 +43,6 @@ make sdk_install_pkg -j 8 #DEBUG=1
 
 ## psw install
 ```bash
-make clean
 export DEB_BUILD_OPTIONS="nostrip"
 make psw -j 8 #DEBUG=1
 make deb_psw_pkg -j 8 #DEBUG=1
