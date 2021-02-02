@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>CORS - note</title>
+        <title>Introduction - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html" class="active"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,41 +163,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#cors" id="cors">Cors</a></h1>
-<p>cors是前端的常见问题。比如在localhost:9000开放了http server，你可以在命令行中用curl/httpie来访问。在这种非浏览器环境中，不存在跨域请求这个问题。</p>
-<p>但是在浏览器中，出于安全考虑，对于跨域有着不一样的处理。首先明确一下哪些场合是跨域的：在127.0.0.1:3000的web前端中访问127.0.0.1:9000就是跨域的。</p>
-<p>浏览器在遇到跨域请求时，会先发一个option包。如果server不能处理好这个option包，那么前端就会报cors错误，后端（server）就回报options处理错误。</p>
-<p>解决这个问题多半要从后端入手。如果用的是express，可以装一个cors的包。如果是django，好像是加一个中间层（存疑）。如果是rpc，那么至少要能处理option请求。</p>
-<p>如果有一个前端，无论如何要调用一个rpc协议，但是rpc server没有处理好cors的option请求。这个时候有一个绕过的方法：多写个能处理cors的后端（express）。前端访问后端，走cors。后端访问rpc，因为不在浏览器环境里，所以没有option请求包。</p>
-<hr />
-<p>把后端和前端写在同一个端口可能需要对项目结构做出巨大的改变。如果想省事，后端开在9000，前端开在3000，而且后端和前端之间使用同源策略，可以在前端的package.json中加上这句</p>
-<pre><code> &quot;proxy&quot;: &quot;http://127.0.0.1:9000/&quot;
-</code></pre>
-<p>然后我们前端的 url 我们可以更加简短</p>
-<pre><code>        var url = &quot;/api/create&quot;
-        fetch(url,{
-                method:'POST',
-                body:...
-        }).then()
-</code></pre>
-<hr />
-<p>最后一种方法是，将前端封装到electron中。在electron中你可以禁用option（存疑，道听途说的）</p>
-<p>如果后端一时半会儿无法支持,也可以通过修改浏览器的配置来绕过cors</p>
-<pre><code>google-chrome --disable-web-security --user-data-dir
-</code></pre>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        
 
                         
-                            <a rel="next" href="client-router-and-server-router.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="cors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -209,13 +184,9 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
 
                 
-                    <a rel="next" href="client-router-and-server-router.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="cors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -223,21 +194,6 @@
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>我们对笔记软件的要求 - note</title>
+        <title>失败的插件开发 - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html" class="active"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html" class="active"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,51 +163,83 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#我们对笔记软件的要求" id="我们对笔记软件的要求">我们对笔记软件的要求</a></h1>
-<h2><a class="header" href="#为什么不用手写" id="为什么不用手写">为什么不用手写?</a></h2>
-<p>手写笔记依然我写笔记的第一步，但是要让笔记长久的有意义，必须转成电子版。
-因为手写难以持久。几个月前手写的你不会再看的。</p>
-<p>在Linux环境下，我们有一下要求：</p>
-<ul>
-<li>必须支持markdown或者latex，至少一种标记型语言
-笔记软件是markdown工具，但不只是能看markdown,还要有好的管理功能</li>
-<li>依赖于文件而非数据库.用json也不好</li>
-<li>有标签搜索功能</li>
-<li>复制图片必须方便</li>
-</ul>
-<p>非必须功能：</p>
-<ul>
-<li>免费？ 反正我不喜欢notion这种收费的</li>
-<li>同步：如果只是做程序笔记，并不需要良好的同步功能。同步造成的不安全问题也必须考虑. 能用git同步就行了</li>
-<li>界面：朴素的界面与程序很配。记录一些简单的东西并不一定要多好看的界面</li>
-<li>跨平台性?</li>
-</ul>
-<h2><a class="header" href="#几种方案评测" id="几种方案评测">几种方案评测</a></h2>
-<p>不要指望一个软件解决所有问题，要多个软件结合。
-比如在路上我就用手机写点东西，然后到电脑上再整理。</p>
-<p>在电脑上整理的优点是能看到自己以前想的。有些想法以前只是随手记下来，过了几个礼拜开始实践了。</p>
-<h3><a class="header" href="#doom-emacs" id="doom-emacs">doom emacs：</a></h3>
-<p>优点：文本型。可以根据不同项目，写不同的org.但又能统一的管理，查看。</p>
-<p>缺点：不会用。比如c-a如何映射成加法</p>
-<h3><a class="header" href="#thunderbird" id="thunderbird">thunderbird：</a></h3>
-<p>优点：图形化，上手快。能做到平台同步</p>
-<p>缺点：似乎管理的单位有问题。是一条一条的，不能系统的思考</p>
-<h3><a class="header" href="#手机的备忘录" id="手机的备忘录">手机的备忘录</a></h3>
-<p>优点： 方便</p>
-<p>缺点: 不能做系统的思考，不适合写长篇大论。比如思考论文，你会用手机整理观点吗？</p>
+                        <h1><a class="header" href="#记一个失败的插件开发" id="记一个失败的插件开发">记一个失败的插件开发</a></h1>
+<p>最近查看如何下载oc.sjtu.edu.cn上的视频. 我F12查看media的下载,然后复制成curl,用curl下载视频</p>
+<pre><code class="language-bash">curl 'https://live.sjtu.edu.cn/vod/31011200112000000000/31011200111320002428/0_1603701640-1603704941.mp4?key=1603774970-1-1a0ff9b1c95a48e363ab7b990a195069' \
+  -H 'Connection: keep-alive' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36' \
+  -H 'Accept: */*' \
+  -H 'Origin: https://courses.sjtu.edu.cn' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Dest: video' \
+  -H 'Referer: https://courses.sjtu.edu.cn/' \
+  -H 'Accept-Language: en,zh-CN;q=0.9,zh;q=0.8' \
+  -H 'Range: bytes=196608-'  --output b.mp4
+
+</code></pre>
+<p>如果用js的fetch:</p>
+<pre><code class="language-javascript">
+</code></pre>
+<p>看上去很简单,不过有两个需要注意的点:</p>
+<ol>
+<li>referer是 <code>https://courses.sjtu.edu.cn</code></li>
+<li>用curl的时候,range是从0开始.比如上文这个我就写错了,下载下来也没用.</li>
+</ol>
+<p>但是我感觉,大多数人电脑上是搞不定用curl的.会想起大一用的选课插件,我决定用插件搞定oc视频下载.</p>
+<p>我以前下载视频主要用youtube-dl,再不济用代下载网站,比如<a href="https://weibo.iiilab.com/"> 微博、秒拍、小咖秀、晃咖视频解析下载 - 保存视频到电脑、手机</a> . 用浏览器的插件下载我很少用.</p>
+<p>我没打算自己从头写,而是打算改一改.在github我没找到好的实现,于是我先去chrome webstore上找了一个视频下载的插件.由于chrome的crx现在不会保存,会自动删除,所以我先装了一个专门用来下载crx的插件.</p>
+<p>下载下来的crx有压缩和混淆,好在格式化一下还能看得懂</p>
+<p>chrome extension里面改referer要这样改:</p>
+<pre><code class="language-javascript">// snippet 1       
+chrome.webRequest.onBeforeSendHeaders.addListener(a =&gt; {
+            if (&quot;GET&quot; === a.method) {
+                const b = a.requestHeaders.findIndex(x =&gt; &quot;referer&quot; === x.name.toLowerCase());
+                if (b === -1) {
+                    a.requestHeaders.push({
+                        name: &quot;referer&quot;,
+                        value: &quot;https://courses.sjtu.edu.cn/&quot;
+                    })
+                } else {
+                    a[b].value = &quot;https://courses.sjtu.edu.cn/&quot;;
+                }
+            }
+            return {requestHeaders: a.requestHeaders}
+        }, {urls: [&quot;*://oc.sjtu.edu.cn/*&quot;, &quot;*://live.sjtu.edu.cn/*&quot;]}, [&quot;blocking&quot;, &quot;requestHeaders&quot;, &quot;extraHeaders&quot;])
+</code></pre>
+<p>这样改,对于fetch就已经生效了.如果我们下载的不是视频,而是图片,这样就已经可以了.</p>
+<p>但是视频下载时间很随缘.一个45分钟的mp4,有时要下载10分钟,有时要下载40分钟.fetch不会显示进度条,只会在后台下载,所以特别对用户不友好.而想要用chrome自带的下载,需要调用</p>
+<pre><code class="language-javascript">chrome.downloads.download({
+            url: b,
+            filename: a,
+            method: &quot;GET&quot;,
+            headers: [
+                // {
+                //     name: &quot;referer&quot;,
+                //     value: &quot;https://courses.sjtu.edu.cn/&quot;
+                // }
+            ]
+        }, a =&gt; {
+            console.log(a)
+        })
+</code></pre>
+<p>但是,snippet 1中修改referer对于chrome.downloads是不奏效的.</p>
+<p>我查了一下这个问题, 在 https://stackoverflow.com/questions/20579112/send-referrer-header-with-chrome-downloads-api 上有谈论.但是解决方法同样只适用于较小的图片,像视频这么大的,还是不合适.因为不能静默的下载这么大的东西</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="requirement_of_pc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="mmap.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="各大tilingWindow的测评.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="permutation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -219,13 +251,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="requirement_of_pc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="mmap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="各大tilingWindow的测评.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="permutation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -233,21 +265,6 @@
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

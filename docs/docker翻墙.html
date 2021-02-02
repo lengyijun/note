@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>各大tiling Window的测评.md - note</title>
+        <title>如何在docker build的时候翻墙 - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html" class="active"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html" class="active"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,56 +163,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#各大tiling-window的测评" id="各大tiling-window的测评">各大tiling window的测评</a></h1>
-<h2><a class="header" href="#awesome" id="awesome">awesome</a></h2>
-<p>没有主从窗口思想.窗口地位平等</p>
-<h3><a class="header" href="#优点" id="优点">优点</a></h3>
-<ul>
-<li>增加了window置顶这些功能</li>
-</ul>
-<h3><a class="header" href="#缺点" id="缺点">缺点</a></h3>
-<ul>
-<li>标题不能缩到bar里面,浪费了一行</li>
-<li>bar是自成体系,不能利用polybar这些</li>
-<li>配置有点复杂</li>
-<li>默认启动器没有dmenu好用5</li>
-</ul>
-<hr />
-<h2><a class="header" href="#dwm" id="dwm">DWM</a></h2>
-<p>主从窗口思想.主窗口放在左边,副窗口自动缩小</p>
-<h3><a class="header" href="#优点-1" id="优点-1">优点</a></h3>
-<ul>
-<li>标题能缩到bar里面</li>
-</ul>
-<h3><a class="header" href="#缺点-1" id="缺点-1">缺点</a></h3>
-<ul>
-<li>配置格外复杂</li>
-<li>只有两种窗口布局,一种浮动,一种左右.上下做不到</li>
-</ul>
-<hr />
-<h2><a class="header" href="#leftwm" id="leftwm">Leftwm</a></h2>
-<h3><a class="header" href="#优点-2" id="优点-2">优点</a></h3>
-<ul>
-<li>配置用toml,很不错</li>
-<li>标题能缩到bar里面</li>
-</ul>
-<h3><a class="header" href="#缺点-2" id="缺点-2">缺点</a></h3>
-<ul>
-<li>workspace非常混乱</li>
-</ul>
+                        <p>遇到要dockerfile里面要安装go依赖,一般就比较麻烦</p>
+<p>我的方案是</p>
+<p>安装brook</p>
+<pre><code class="language-asciidoc">brook socks5tohttp -l 0.0.0.0:8080 -s 127.0.0.1:1080
+
+export http_proxy=172.17.0.1:8080 
+export https_proxy=172.17.0.1:8080 
+</code></pre>
+<p>然后就好了</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="笔记软件.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="client-router-and-server-router.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="mmap.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="requirement_of_pc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -224,13 +196,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="笔记软件.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="client-router-and-server-router.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="mmap.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="requirement_of_pc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -238,21 +210,6 @@
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

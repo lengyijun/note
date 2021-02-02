@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - note</title>
+        <title>我们对笔记软件的要求 - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html" class="active"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,16 +163,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+                        <h1><a class="header" href="#我们对笔记软件的要求" id="我们对笔记软件的要求">我们对笔记软件的要求</a></h1>
+<h2><a class="header" href="#为什么不用手写" id="为什么不用手写">为什么不用手写?</a></h2>
+<p>手写笔记依然我写笔记的第一步，但是要让笔记长久的有意义，必须转成电子版。
+因为手写难以持久。几个月前手写的你不会再看的。</p>
+<p>在Linux环境下，我们有一下要求：</p>
+<ul>
+<li>必须支持markdown或者latex，至少一种标记型语言
+笔记软件是markdown工具，但不只是能看markdown,还要有好的管理功能</li>
+<li>依赖于文件而非数据库.用json也不好</li>
+<li>有标签搜索功能</li>
+<li>复制图片必须方便</li>
+</ul>
+<p>非必须功能：</p>
+<ul>
+<li>免费？ 反正我不喜欢notion这种收费的</li>
+<li>同步：如果只是做程序笔记，并不需要良好的同步功能。同步造成的不安全问题也必须考虑. 能用git同步就行了</li>
+<li>界面：朴素的界面与程序很配。记录一些简单的东西并不一定要多好看的界面</li>
+<li>跨平台性?</li>
+</ul>
+<h2><a class="header" href="#几种方案评测" id="几种方案评测">几种方案评测</a></h2>
+<p>不要指望一个软件解决所有问题，要多个软件结合。
+比如在路上我就用手机写点东西，然后到电脑上再整理。</p>
+<p>在电脑上整理的优点是能看到自己以前想的。有些想法以前只是随手记下来，过了几个礼拜开始实践了。</p>
+<p>对于一些小事，2分钟就可以解决的，就不要各种软件规划了，直接干就是了
+不要为了规划而规划</p>
+<h3><a class="header" href="#doom-emacs" id="doom-emacs">doom emacs：</a></h3>
+<p>优点：文本型。可以根据不同项目，写不同的org.但又能统一的管理，查看。</p>
+<p>缺点：不会用。比如c-a如何映射成加法</p>
+<h3><a class="header" href="#thunderbird" id="thunderbird">thunderbird：</a></h3>
+<p>优点：图形化，上手快。能做到平台同步</p>
+<p>缺点：似乎管理的单位有问题。是一条一条的，不能系统的思考</p>
+<h3><a class="header" href="#手机的备忘录" id="手机的备忘录">手机的备忘录</a></h3>
+<p>优点： 方便</p>
+<p>缺点: 不能做系统的思考，不适合写长篇大论。比如思考论文，你会用手机整理观点吗？</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="requirement_of_pc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="cors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="各大tilingWindow的测评.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -184,9 +221,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="requirement_of_pc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="cors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="各大tilingWindow的测评.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -194,21 +235,6 @@
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

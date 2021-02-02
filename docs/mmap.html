@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>client router &amp; server router - note</title>
+        <title>mmap - note</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html" class="active"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html" class="active"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,47 +163,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#client-router--server-router" id="client-router--server-router">Client Router &amp; Server Router</a></h1>
-<p>client router: react-dom-router</p>
-<p>server-router: express router, beego router</p>
-<p>当我们先用react开发单页面应用的时候,一般会使用react-router这种简单的router来控制.接下去我们会npm run build,把react编译成原生的html,css和javascript.这种文件可以用`python -m SimpleHTTPServer` 来启动,也可以</p>
-<p>`serve -s build` 其中serve是一个nodejs的包,可以用yarn安装一下.</p>
-<hr />
-<p>不过后端还是终有一天要和前端合并在一起的.这个时候会出现路由从哪里找这个问题:比如localhost:300/success</p>
-<p>这个路由可以由前端控制,也有可能从后端控制.</p>
-<p>我们显然希望还是从前端控制,因为如果从后端控制,岂不是所有的前端的代码都得用html重新写一遍.现在还有谁会写原生的html代码和css代码.</p>
-<p>好在express和beego都能支持server router和client router同时存在.</p>
-<p>我们在express的router最后加上通配符,那么express本身不解析success路由,还是交给前端处理路由.index.html就是react编译出来的html</p>
-<pre><code class="language-js">// All expressjs routes
-// then
-app.get('*', (req, res) =&gt; {                       
-  res.sendFile(path.resolve(__dirname, 'the path to your react project', 'index.html'));                               
-});
-</code></pre>
-<pre><code class="language-go">
-//在beego中,也是加一条通配的路由
-//前两条是api的路由
-
-func init() {
-	beego.Router(&quot;/stake/apply&quot;, &amp;controllers.StakeController{}, &quot;get:Apply&quot;)
-	beego.Router(&quot;/stake/list&quot;, &amp;controllers.StakeController{}, &quot;get:GetList&quot;)
-	
-	beego.Router(&quot;*&quot;, &amp;controllers.MainController{})
-}
-</code></pre>
+                        <h1><a class="header" href="#mmap" id="mmap">Mmap</a></h1>
+<p>Mmap的核心有两点:</p>
+<ol>
+<li>磁盘直接到用户态内存,不经过内核态内存,少一次复制</li>
+<li>按需读取,用缺页终端读取</li>
+</ol>
+<p>mmap打开一个文件时,什么也不会发生,就给个一段连续的虚拟内存地址</p>
+<p>等你具体要用哪一个页了,会触发缺页中断,然后把文件的那个页读进来.</p>
+<p>操作系统依然可能会把mmap进来的页扔掉,在内存紧张的时候(?)</p>
+<p>Mmap相当于操作系统给你做了缓存(cache)</p>
+<h2><a class="header" href="#mmap-vs-fopen" id="mmap-vs-fopen">Mmap vs fopen</a></h2>
+<ol>
+<li>少一次内存复制</li>
+</ol>
+<h2><a class="header" href="#缺点" id="缺点">缺点</a></h2>
+<p>缺页中断次数太多.某些场合你可能受不了缺页中断的延迟,那只能一次性全读到内存了</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="cors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="各大tilingWindow的测评.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="失败的插件开发.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -215,13 +203,13 @@ func init() {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="cors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="各大tilingWindow的测评.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="失败的插件开发.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -229,21 +217,6 @@ func init() {
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
