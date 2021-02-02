@@ -1,0 +1,560 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>note</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="ru-he-zai-docker-build-de-shi-hou-fan-qiang.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">note</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<h1><a class="header" href="#cors" id="cors">Cors</a></h1>
+<p>cors是前端的常见问题。比如在localhost:9000开放了http server，你可以在命令行中用curl/httpie来访问。在这种非浏览器环境中，不存在跨域请求这个问题。</p>
+<p>但是在浏览器中，出于安全考虑，对于跨域有着不一样的处理。首先明确一下哪些场合是跨域的：在127.0.0.1:3000的web前端中访问127.0.0.1:9000就是跨域的。</p>
+<p>浏览器在遇到跨域请求时，会先发一个option包。如果server不能处理好这个option包，那么前端就会报cors错误，后端（server）就回报options处理错误。</p>
+<p>解决这个问题多半要从后端入手。如果用的是express，可以装一个cors的包。如果是django，好像是加一个中间层（存疑）。如果是rpc，那么至少要能处理option请求。</p>
+<p>如果有一个前端，无论如何要调用一个rpc协议，但是rpc server没有处理好cors的option请求。这个时候有一个绕过的方法：多写个能处理cors的后端（express）。前端访问后端，走cors。后端访问rpc，因为不在浏览器环境里，所以没有option请求包。</p>
+<hr />
+<p>把后端和前端写在同一个端口可能需要对项目结构做出巨大的改变。如果想省事，后端开在9000，前端开在3000，而且后端和前端之间使用同源策略，可以在前端的package.json中加上这句</p>
+<pre><code> &quot;proxy&quot;: &quot;http://127.0.0.1:9000/&quot;
+</code></pre>
+<p>然后我们前端的 url 我们可以更加简短</p>
+<pre><code>        var url = &quot;/api/create&quot;
+        fetch(url,{
+                method:'POST',
+                body:...
+        }).then()
+</code></pre>
+<hr />
+<p>最后一种方法是，将前端封装到electron中。在electron中你可以禁用option（存疑，道听途说的）</p>
+<p>如果后端一时半会儿无法支持,也可以通过修改浏览器的配置来绕过cors</p>
+<pre><code>google-chrome --disable-web-security --user-data-dir
+</code></pre>
+<h1><a class="header" href="#client-router--server-router" id="client-router--server-router">Client Router &amp; Server Router</a></h1>
+<p>client router: react-dom-router</p>
+<p>server-router: express router, beego router</p>
+<p>当我们先用react开发单页面应用的时候,一般会使用react-router这种简单的router来控制.接下去我们会npm run build,把react编译成原生的html,css和javascript.这种文件可以用`python -m SimpleHTTPServer` 来启动,也可以</p>
+<p>`serve -s build` 其中serve是一个nodejs的包,可以用yarn安装一下.</p>
+<hr />
+<p>不过后端还是终有一天要和前端合并在一起的.这个时候会出现路由从哪里找这个问题:比如localhost:300/success</p>
+<p>这个路由可以由前端控制,也有可能从后端控制.</p>
+<p>我们显然希望还是从前端控制,因为如果从后端控制,岂不是所有的前端的代码都得用html重新写一遍.现在还有谁会写原生的html代码和css代码.</p>
+<p>好在express和beego都能支持server router和client router同时存在.</p>
+<p>我们在express的router最后加上通配符,那么express本身不解析success路由,还是交给前端处理路由.index.html就是react编译出来的html</p>
+<pre><code class="language-js">// All expressjs routes
+// then
+app.get('*', (req, res) =&gt; {                       
+  res.sendFile(path.resolve(__dirname, 'the path to your react project', 'index.html'));                               
+});
+</code></pre>
+<pre><code class="language-go">
+//在beego中,也是加一条通配的路由
+//前两条是api的路由
+
+func init() {
+	beego.Router(&quot;/stake/apply&quot;, &amp;controllers.StakeController{}, &quot;get:Apply&quot;)
+	beego.Router(&quot;/stake/list&quot;, &amp;controllers.StakeController{}, &quot;get:GetList&quot;)
+	
+	beego.Router(&quot;*&quot;, &amp;controllers.MainController{})
+}
+</code></pre>
+<h1><a class="header" href="#如何在docker-build的时候翻墙" id="如何在docker-build的时候翻墙">如何在docker build的时候翻墙</a></h1>
+<p>32G内存</p>
+<p>i7/i9 CPU</p>
+<p>1T固态磁盘</p>
+<p>蓝光屏</p>
+<p>上下左右键不能合并</p>
+<p>enter和backspace必须在最右边</p>
+<p>typeC</p>
+<p>180可折叠</p>
+<p>有显示音量的键盘灯</p>
+<p>对ubuntu支持比较好</p>
+<p>thinkpad的x和t系列比较好</p>
+<p>thinkpad E系列不是ThinkPad，对linux支持不好</p>
+<p><a href="https://www.zhihu.com/question/286150644/answer/1064982579">https://www.zhihu.com/question/286150644/answer/1064982579</a></p>
+<h1><a class="header" href="#我们对笔记软件的要求" id="我们对笔记软件的要求">我们对笔记软件的要求</a></h1>
+<h2><a class="header" href="#为什么不用手写" id="为什么不用手写">为什么不用手写?</a></h2>
+<p>手写笔记依然我写笔记的第一步，但是要让笔记长久的有意义，必须转成电子版。
+因为手写难以持久。几个月前手写的你不会再看的。</p>
+<p>在Linux环境下，我们有一下要求：</p>
+<ul>
+<li>必须支持markdown或者latex，至少一种标记型语言
+笔记软件是markdown工具，但不只是能看markdown,还要有好的管理功能</li>
+<li>依赖于文件而非数据库.用json也不好</li>
+<li>有标签搜索功能</li>
+<li>复制图片必须方便</li>
+</ul>
+<p>非必须功能：</p>
+<ul>
+<li>免费？ 反正我不喜欢notion这种收费的</li>
+<li>同步：如果只是做程序笔记，并不需要良好的同步功能。同步造成的不安全问题也必须考虑. 能用git同步就行了</li>
+<li>界面：朴素的界面与程序很配。记录一些简单的东西并不一定要多好看的界面</li>
+<li>跨平台性?</li>
+</ul>
+<h2><a class="header" href="#几种方案评测" id="几种方案评测">几种方案评测</a></h2>
+<p>不要指望一个软件解决所有问题，要多个软件结合。
+比如在路上我就用手机写点东西，然后到电脑上再整理。</p>
+<p>在电脑上整理的优点是能看到自己以前想的。有些想法以前只是随手记下来，过了几个礼拜开始实践了。</p>
+<h3><a class="header" href="#doom-emacs" id="doom-emacs">doom emacs：</a></h3>
+<p>优点：文本型。可以根据不同项目，写不同的org.但又能统一的管理，查看。</p>
+<p>缺点：不会用。比如c-a如何映射成加法</p>
+<h3><a class="header" href="#thunderbird" id="thunderbird">thunderbird：</a></h3>
+<p>优点：图形化，上手快。能做到平台同步</p>
+<p>缺点：似乎管理的单位有问题。是一条一条的，不能系统的思考</p>
+<h3><a class="header" href="#手机的备忘录" id="手机的备忘录">手机的备忘录</a></h3>
+<p>优点： 方便</p>
+<p>缺点: 不能做系统的思考，不适合写长篇大论。比如思考论文，你会用手机整理观点吗？</p>
+<h1><a class="header" href="#各大tiling-window的测评" id="各大tiling-window的测评">各大tiling window的测评</a></h1>
+<h2><a class="header" href="#awesome" id="awesome">awesome</a></h2>
+<p>没有主从窗口思想.窗口地位平等</p>
+<h3><a class="header" href="#优点" id="优点">优点</a></h3>
+<ul>
+<li>增加了window置顶这些功能</li>
+</ul>
+<h3><a class="header" href="#缺点" id="缺点">缺点</a></h3>
+<ul>
+<li>标题不能缩到bar里面,浪费了一行</li>
+<li>bar是自成体系,不能利用polybar这些</li>
+<li>配置有点复杂</li>
+<li>默认启动器没有dmenu好用5</li>
+</ul>
+<hr />
+<h2><a class="header" href="#dwm" id="dwm">DWM</a></h2>
+<p>主从窗口思想.主窗口放在左边,副窗口自动缩小</p>
+<h3><a class="header" href="#优点-1" id="优点-1">优点</a></h3>
+<ul>
+<li>标题能缩到bar里面</li>
+</ul>
+<h3><a class="header" href="#缺点-1" id="缺点-1">缺点</a></h3>
+<ul>
+<li>配置格外复杂</li>
+<li>只有两种窗口布局,一种浮动,一种左右.上下做不到</li>
+</ul>
+<hr />
+<h2><a class="header" href="#leftwm" id="leftwm">Leftwm</a></h2>
+<h3><a class="header" href="#优点-2" id="优点-2">优点</a></h3>
+<ul>
+<li>配置用toml,很不错</li>
+<li>标题能缩到bar里面</li>
+</ul>
+<h3><a class="header" href="#缺点-2" id="缺点-2">缺点</a></h3>
+<ul>
+<li>workspace非常混乱</li>
+</ul>
+<h1><a class="header" href="#mmap" id="mmap">Mmap</a></h1>
+<p>Mmap的核心有两点:</p>
+<ol>
+<li>磁盘直接到用户态内存,不经过内核态内存,少一次复制</li>
+<li>按需读取,用缺页终端读取</li>
+</ol>
+<p>mmap打开一个文件时,什么也不会发生,就给个一段连续的虚拟内存地址</p>
+<p>等你具体要用哪一个页了,会触发缺页中断,然后把文件的那个页读进来.</p>
+<p>操作系统依然可能会把mmap进来的页扔掉,在内存紧张的时候(?)</p>
+<p>Mmap相当于操作系统给你做了缓存(cache)</p>
+<h2><a class="header" href="#mmap-vs-fopen" id="mmap-vs-fopen">Mmap vs fopen</a></h2>
+<ol>
+<li>少一次内存复制</li>
+</ol>
+<h2><a class="header" href="#缺点-3" id="缺点-3">缺点</a></h2>
+<p>缺页中断次数太多.某些场合你可能受不了缺页中断的延迟,那只能一次性全读到内存了</p>
+<h1><a class="header" href="#记一个失败的插件开发" id="记一个失败的插件开发">记一个失败的插件开发</a></h1>
+<p>最近查看如何下载oc.sjtu.edu.cn上的视频. 我F12查看media的下载,然后复制成curl,用curl下载视频</p>
+<pre><code class="language-bash">curl 'https://live.sjtu.edu.cn/vod/31011200112000000000/31011200111320002428/0_1603701640-1603704941.mp4?key=1603774970-1-1a0ff9b1c95a48e363ab7b990a195069' \
+  -H 'Connection: keep-alive' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36' \
+  -H 'Accept: */*' \
+  -H 'Origin: https://courses.sjtu.edu.cn' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Dest: video' \
+  -H 'Referer: https://courses.sjtu.edu.cn/' \
+  -H 'Accept-Language: en,zh-CN;q=0.9,zh;q=0.8' \
+  -H 'Range: bytes=196608-'  --output b.mp4
+
+</code></pre>
+<p>如果用js的fetch:</p>
+<pre><code class="language-javascript">
+</code></pre>
+<p>看上去很简单,不过有两个需要注意的点:</p>
+<ol>
+<li>referer是 <code>https://courses.sjtu.edu.cn</code></li>
+<li>用curl的时候,range是从0开始.比如上文这个我就写错了,下载下来也没用.</li>
+</ol>
+<p>但是我感觉,大多数人电脑上是搞不定用curl的.会想起大一用的选课插件,我决定用插件搞定oc视频下载.</p>
+<p>我以前下载视频主要用youtube-dl,再不济用代下载网站,比如<a href="https://weibo.iiilab.com/"> 微博、秒拍、小咖秀、晃咖视频解析下载 - 保存视频到电脑、手机</a> . 用浏览器的插件下载我很少用.</p>
+<p>我没打算自己从头写,而是打算改一改.在github我没找到好的实现,于是我先去chrome webstore上找了一个视频下载的插件.由于chrome的crx现在不会保存,会自动删除,所以我先装了一个专门用来下载crx的插件.</p>
+<p>下载下来的crx有压缩和混淆,好在格式化一下还能看得懂</p>
+<p>chrome extension里面改referer要这样改:</p>
+<pre><code class="language-javascript">// snippet 1       
+chrome.webRequest.onBeforeSendHeaders.addListener(a =&gt; {
+            if (&quot;GET&quot; === a.method) {
+                const b = a.requestHeaders.findIndex(x =&gt; &quot;referer&quot; === x.name.toLowerCase());
+                if (b === -1) {
+                    a.requestHeaders.push({
+                        name: &quot;referer&quot;,
+                        value: &quot;https://courses.sjtu.edu.cn/&quot;
+                    })
+                } else {
+                    a[b].value = &quot;https://courses.sjtu.edu.cn/&quot;;
+                }
+            }
+            return {requestHeaders: a.requestHeaders}
+        }, {urls: [&quot;*://oc.sjtu.edu.cn/*&quot;, &quot;*://live.sjtu.edu.cn/*&quot;]}, [&quot;blocking&quot;, &quot;requestHeaders&quot;, &quot;extraHeaders&quot;])
+</code></pre>
+<p>这样改,对于fetch就已经生效了.如果我们下载的不是视频,而是图片,这样就已经可以了.</p>
+<p>但是视频下载时间很随缘.一个45分钟的mp4,有时要下载10分钟,有时要下载40分钟.fetch不会显示进度条,只会在后台下载,所以特别对用户不友好.而想要用chrome自带的下载,需要调用</p>
+<pre><code class="language-javascript">chrome.downloads.download({
+            url: b,
+            filename: a,
+            method: &quot;GET&quot;,
+            headers: [
+                // {
+                //     name: &quot;referer&quot;,
+                //     value: &quot;https://courses.sjtu.edu.cn/&quot;
+                // }
+            ]
+        }, a =&gt; {
+            console.log(a)
+        })
+</code></pre>
+<p>但是,snippet 1中修改referer对于chrome.downloads是不奏效的.</p>
+<p>我查了一下这个问题, 在 https://stackoverflow.com/questions/20579112/send-referrer-header-with-chrome-downloads-api 上有谈论.但是解决方法同样只适用于较小的图片,像视频这么大的,还是不合适.因为不能静默的下载这么大的东西</p>
+<h1><a class="header" href="#排列数与组合数" id="排列数与组合数">排列数与组合数</a></h1>
+<p>在做算法题的时候经常需要用到排列数和组合数。
+于是我首先写了一个命令行的计算组合数和排列数的工具。
+他接受两个参数，分别是n和r.顺序无所谓，反正我会自动调整顺序的。</p>
+<p>然后我们需要所有的组合，比如 [1,2,3], 给出所有的排列，就是</p>
+<p>[1,2,3]
+[1,3,2]
+[2,1,3]
+[2,3,1]
+[3,1,2]
+[3,2,1]</p>
+<p>计算这个，我们一般是用dfs做的。不过我发现了cpp中next_permutation这个函数之后，发觉了更好玩的算法</p>
+<ol>
+<li>从后往前寻找索引满足 a[k] &lt; a[k + 1], 如果此条件不满足，则说明已遍历到最后一个。</li>
+<li>从后往前遍历，找到第一个比a[k]大的数a[l], 即a[k] &lt; a[l].</li>
+<li>交换a[k]与a[l].</li>
+<li>反转k + 1 ~ n之间的元素。</li>
+</ol>
+<p>用cpp写是这样</p>
+<pre><code>class Solution {
+public:
+    /**
+     * @param nums: An array of integers
+     * @return: An array of integers that's next permuation
+     */
+    vector&lt;int&gt; nextPermutation(vector&lt;int&gt; &amp;nums) {
+        if (nums.empty() || nums.size() &lt;= 1) {
+            return nums;
+        }
+        // step1: find nums[i] &lt; nums[i + 1]
+        int i = 0;
+        for (i = nums.size() - 2; i &gt;= 0; --i) {
+            if (nums[i] &lt; nums[i + 1]) {
+                break;
+            } else if (0 == i) {
+                // reverse nums if reach maximum
+                reverse(nums, 0, nums.size() - 1);
+                return nums;
+            }
+        }
+        // step2: find nums[i] &lt; nums[j]
+        int j = 0;
+        for (j = nums.size() - 1; j &gt; i; --j) {
+            if (nums[i] &lt; nums[j]) break;
+        }
+        // step3: swap betwenn nums[i] and nums[j]
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        // step4: reverse between [i + 1, n - 1]
+        reverse(nums, i + 1, nums.size() - 1);
+
+        return nums;
+
+    }
+
+private:
+    void reverse(vector&lt;int&gt;&amp; nums, int start, int end) {
+        for (int i = start, j = end; i &lt; j; ++i, --j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+    }
+};
+</code></pre>
+<p>用rust写大概是这样</p>
+<pre><code>fn next_permutation&lt;A:PartialOrd&gt;(mut x: Vec&lt;A&gt;) -&gt; Option&lt;Vec&lt;A&gt;&gt; {
+    let mut a = x.len();
+
+    let mut i = a - 2;
+    loop {
+        if x[i + 1] &gt; x[i] {
+            break;
+        }
+        if i==0 {
+            //the last one
+            return None;
+        }
+        i -= 1;
+    }
+
+    let mut j = a - 1;
+    while j &gt; i {
+        if x[i] &lt; x[j] {
+            break;
+        }
+        j -= 1;
+    }
+
+    x.swap(i, j);
+
+    i += 1;
+    a -= 1;
+    while i &lt; a {
+        x.swap(i, a);
+        i += 1;
+        a -= 1;
+    }
+    Some(x)
+}
+</code></pre>
+<p>所以需要数组中的元素是可比较的</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
