@@ -163,63 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#迁移tempfile到sgx中" id="迁移tempfile到sgx中">迁移tempfile到sgx中</a></h1>
-<p>首先下载源码：</p>
-<pre><code>git clone https://github.com/Stebalien/tempfile
-</code></pre>
-<p>忽略windows下的特定依赖。忽视devdependency。
-tempfile只有两个依赖remove_dir_all和rand需要处理，所幸这两个依赖都不难处理。</p>
-<h2><a class="header" href="#处理remove_dir_all" id="处理remove_dir_all">处理remove_dir_all</a></h2>
-<p>remove_dir_all只是一个跨平台的封装.我们把这个依赖去掉,用<code>std::remove_dir_all</code>代替即可</p>
-<h2><a class="header" href="#处理rand" id="处理rand">处理rand</a></h2>
-<p>这个直接改成 https://github.com/mesalock-linux/rand-sgx</p>
-<h2><a class="header" href="#处理libc" id="处理libc">处理libc</a></h2>
-<p>首先把Cargo.toml中的libc依赖去掉</p>
-<p>加入下面这段</p>
-<pre><code>[target.'cfg(not(target_env = &quot;sgx&quot;))'.dependencies]
-sgx_tstd = { version = &quot;1.0&quot;, rev = &quot;v1.1.2&quot;, git = &quot;https://github.com/apache/teaclave-sgx-sdk.git&quot;, features=[&quot;untrusted_fs&quot;,&quot;thread&quot;, &quot;backtrace&quot;] }
-sgx_libc = { version = &quot;1.0&quot;, rev = &quot;v1.1.2&quot;, git = &quot;https://github.com/apache/teaclave-sgx-sdk.git&quot; }
-
-</code></pre>
-<p>在<code>src/lib.rs</code>的开头写</p>
-<pre><code>#![no_std]
-use std::prelude::v1::*;
-#[macro_use]
-extern crate sgx_tstd as std;
-extern crate sgx_libc as libc;
-</code></pre>
-<p>到这一步,<code>cargo b</code> 一下.会看到一堆错误</p>
-<pre><code>error[E0432]: unresolved imports `libc::link`, `libc::rename`, `libc::unlink`
-  --&gt; src/file/imp/unix.rs:11:27
-   |
-11 | use libc::{c_char, c_int, link, rename, unlink};
-   |                           ^^^^  ^^^^^^  ^^^^^^ no `unlink` in the root
-   |                           |     |
-   |                           |     no `rename` in the root
-   |                           no `link` in the root
-
-</code></pre>
-<p>首先是这个link找不到的问题,需要该一下路径</p>
-<pre><code>use libc::{c_char, c_int};
-use libc::ocall::{link, rename, unlink};
-</code></pre>
-<p>然后是</p>
-<pre><code>64 |     use libc::{EISDIR, ENOENT, EOPNOTSUPP, O_EXCL, O_TMPFILE};
-   |                                                    ^^^^^^^^^ no `O_TMPFILE` in the root
-
-</code></pre>
-<p>这里没办法,只能不用<code>O_TMPFILE</code>了</p>
-<p>最后是</p>
-<pre><code>error: duplicate lang item in crate `std`: `f32_runtime`.
-  |
-  = note: the lang item is first defined in crate `sgx_tstd` (which `tempfile` depends on)
-
-</code></pre>
-<p>需要把每一个rs文件的开头都加上</p>
-<pre><code>use std::prelude::v1::*;
-</code></pre>
-<p>虽然不是每个文件都必要加,但我也分不清哪些需要,所有都加了,也没关系</p>
-<p>现在<code>cargo b</code>应该就不会报错了</p>
+                        <h1><a class="header" href="#迁移tempfile到sgx中" id="迁移tempfile到sgx中">迁移tempfile到SGX中</a></h1>
 
                     </main>
 

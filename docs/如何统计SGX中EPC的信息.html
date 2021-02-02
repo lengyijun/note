@@ -164,32 +164,6 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#如何统计sgx中epc的信息" id="如何统计sgx中epc的信息">如何统计SGX中EPC的信息</a></h1>
-<p>我们一般用htop来看系统负载。但是在SGX中，却缺少原生的工具。</p>
-<p>后来我找到这个</p>
-<p>https://fortanix.com/blog/2020/02/monitoring-intel-sgx-enclaves/</p>
-<p>要运行这个，首先需要重新编译linux-sgx-driver。</p>
-<p>源代码在 <a href="https://github.com/fortanix/linux-sgx-driver">www.github.com/fortanix/linux-sgx-driver</a> </p>
-<p>不过年旧失修，你是跑不起来的。需要这样做</p>
-<pre><code class="language-bash">cd
-git clone https://github.com/fortanix/linux-sgx-driver fortanix-linux-sgx-driver 
-cd  fortanix-linux-sgx-driver 
-git diff HEAD~ &gt; /tmp/a.diff
-
-cd 
-git clone https://github.com/intel/linux-sgx-driver
-cd linux-sgx-driver
-git apply --3way /tmp/a.diff
-
-# 然后按照 linux-sgx-driver 的正常步骤安装driver
-</code></pre>
-<p>可能有些merge错误，需要自己处理一下，就不赘述了。</p>
-<p>新的driver会创建两个文件 <code>/proc/sgx_enclaves</code> 和 <code>/proc/sgx_stats</code> </p>
-<p>可以用这个命令监控文件的变化</p>
-<pre><code class="language-bash">watch cat /proc/sgx_enclaves
-watch cat /proc/sgx_stats
-</code></pre>
-<p>不过每个字段的含义你并看不懂，所以他还做了一层封装，达到类似与top的输出。 代码在 <a href="https://github.com/fortanix/sgxtop">www.github.com/fortanix/sgxtop</a> </p>
-<p>按照Readme编译就行了</p>
 
                     </main>
 

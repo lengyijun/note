@@ -163,67 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#compile-intel-sgx-sdk-on-ubuntu2004" id="compile-intel-sgx-sdk-on-ubuntu2004">Compile intel SGX sdk on ubuntu20.04</a></h1>
-<h2><a class="header" href="#apt" id="apt">Apt</a></h2>
-<pre><code class="language-bash">sudo apt install build-essential ocaml ocamlbuild automake autoconf libtool wget python libssl-dev git cmake perl libssl-dev libcurl4-openssl-dev protobuf-compiler libprotobuf-dev debhelper cmake reprepro unzip
-</code></pre>
-<h2><a class="header" href="#sdk-install" id="sdk-install">sdk install</a></h2>
-<p>If master is not stable,try download from release</p>
-<pre><code class="language-bash">export DEB_BUILD_OPTIONS=&quot;nostrip&quot;
-make preparation
-sudo cp external/toolset/ubuntu20.04/{as,ld,ld.gold,objdump} /usr/local/bin
-make sdk USE_OPT_LIBS=0 -j 8 #DEBUG=1
-make sdk_install_pkg -j 8 #DEBUG=1
-./linux/installer/bin/sgx_linux_x64_sdk_2.10.100.2.bin
-</code></pre>
-<p>我们需要安装在两个位置<code>/opt</code>和<code>/opt/intel</code>, 不要安装在本目录 . 输入填 <code>/opt</code> ,然后把 <code>/opt/sgxsdk</code> 和 <code>/opt/intel/sgxsdk</code> 软链接在一起</p>
-<p><code>DEBUG=1</code>  是optional的,一般不需要</p>
-<h2><a class="header" href="#psw-install" id="psw-install">psw install</a></h2>
-<pre><code class="language-bash">export DEB_BUILD_OPTIONS=&quot;nostrip&quot;
-make psw -j 8 #DEBUG=1
-make deb_psw_pkg -j 8 #DEBUG=1
-sudo make deb_local_repo -j 8
-</code></pre>
-<p>append to <code>/etc/apt/source.list</code></p>
-<pre><code>deb [trusted=yes arch=amd64] file:/home/lyj/linux-sgx-sgx_2.10/linux/installer/deb/local_repo_tool/../sgx_debian_local_repo focal main
-</code></pre>
-<pre><code class="language-bash">sudo apt update
-sudo apt install libsgx-ae-epid libsgx-ae-le libsgx-ae-pce libsgx-ae-qe3 libsgx-ae-qve libsgx-aesm-ecdsa-plugin libsgx-aesm-epid-plugin libsgx-aesm-launch-plugin libsgx-aesm-pce-plugin libsgx-aesm-quote-ex-plugin libsgx-dcap-default-qpl-dev libsgx-dcap-default-qpl libsgx-dcap-ql-dev libsgx-dcap-ql libsgx-enclave-common-dbgsym libsgx-enclave-common-dev libsgx-enclave-common libsgx-epid-dev libsgx-epid libsgx-launch-dev libsgx-launch libsgx-pce-logic libsgx-qe3-logic libsgx-quote-ex-dev libsgx-quote-ex libsgx-uae-service libsgx-urts-dbgsym libsgx-urts sgx-aesm-service 
-</code></pre>
-<pre><code class="language-bash"># optional
-sudo apt install sgx-dcap-pccs
-</code></pre>
-<h2><a class="header" href="#build-sgx-gdb" id="build-sgx-gdb">build sgx-gdb</a></h2>
-<p>sgx-gdb依赖老版本的gdb. </p>
-<p>download gdb-9.1</p>
-<pre><code class="language-bash">wget https://ftp.gnu.org/gnu/gdb/gdb-9.1.tar.xz
-extract gdb-9.1.tar.xz
-cd gdb-9.1
-mkdir build
-cd build 
-../configure --with-python=/usr/bin/python3 --prefix=/opt/gdb-9.1
-make
-sudo make install
-</code></pre>
-<p>modify <code>which sgx-gdb</code> , redirect GDB to /opt/gdb-9.1/bin/gdb</p>
-<h2><a class="header" href="#test" id="test">test</a></h2>
-<pre><code class="language-bash">cd ~/linux-sgx-sgx_2.10/SampleCode/SampleEnclave
-make clean &amp;&amp; make
-sgx-gdb ./app
-
-set debug-file-directory /usr/lib/debug
-enable sgx_emmt
-run
-</code></pre>
-<p>you should see when finished</p>
-<pre><code>  [Peak stack used]: 15 KB
-  [Peak heap used]:  12 KB
-  [Peak reserved memory used]:  0 KB
-
-</code></pre>
-<h2><a class="header" href="#after-installation" id="after-installation">After installation</a></h2>
-<pre><code>sudo rm /usr/local/bin/{as,ld,ld.gold,objdump}
-</code></pre>
+                        <h1><a class="header" href="#sgx在ubuntu上编译" id="sgx在ubuntu上编译">sgx在ubuntu上编译</a></h1>
 
                     </main>
 
