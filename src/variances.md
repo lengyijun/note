@@ -46,4 +46,40 @@ fn ff(x: &mut Animal)里，传一个&mut Cat就问题很大，因为可能会把
 
 
 
+-----
+
+我们分析一个在生命周期里运用variance的例子：
+
+```
+fn replace<T>(x:&mut T,y:&T){
+	*x=y;
+}
+
+fn main(){
+	let mut x:&'staic str="";
+	{
+		let y="hello";
+		replace(&mut x,&y);
+	}
+}
+```
+
+
+
+首先找T的类型。根据x,T只能是 `&'static str`
+
+然后y的类型需要是是T的subtype
+
+y的类型是`&'static str`的subtype
+
+我们只考虑生命周期这个维度
+
+y的生命周期是`'static`  的subtype
+
+只有比 `'static`更长的生命周期才能是 `'static`的subtype
+
+但显然y的生命周期很短，所以会报错。
+
+
+
 https://doc.rust-lang.org/nomicon/subtyping.html

@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="cors.html"><strong aria-hidden="true">2.</strong> CORS</a></li><li class="chapter-item expanded "><a href="client-router-and-server-router.html"><strong aria-hidden="true">3.</strong> client router &amp; server router</a></li><li class="chapter-item expanded "><a href="docker翻墙.html"><strong aria-hidden="true">4.</strong> 如何在docker build的时候翻墙</a></li><li class="chapter-item expanded "><a href="requirement_of_pc.html"><strong aria-hidden="true">5.</strong> 我对于新电脑的要求</a></li><li class="chapter-item expanded "><a href="笔记软件.html"><strong aria-hidden="true">6.</strong> 我们对笔记软件的要求</a></li><li class="chapter-item expanded "><a href="各大tilingWindow的测评.html"><strong aria-hidden="true">7.</strong> 各大tiling Window的测评.md</a></li><li class="chapter-item expanded "><a href="mmap.html"><strong aria-hidden="true">8.</strong> mmap</a></li><li class="chapter-item expanded "><a href="失败的插件开发.html"><strong aria-hidden="true">9.</strong> 失败的插件开发</a></li><li class="chapter-item expanded "><a href="permutation.html"><strong aria-hidden="true">10.</strong> 组合数与排列数</a></li><li class="chapter-item expanded "><a href="variances.html"><strong aria-hidden="true">11.</strong> variance</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -495,6 +495,59 @@ private:
 }
 </code></pre>
 <p>所以需要数组中的元素是可比较的</p>
+<h1><a class="header" href="#variance" id="variance">Variance</a></h1>
+<p>Variance是Rust中绕不开的问题。
+Variance问题就是subtype和supertype的关系。
+比如Cat是subtype, Animal是supertype. 因为Cat具有Animal所有的特征和函数。</p>
+<p>比如 fn ff(x: Animal) 里，传一个Cat给他就问题不大</p>
+<p>fn ff(x: &amp;Animal) 里，传一个&amp;Cat给他也可以</p>
+<p>fn ff(x: &amp;mut Animal)里，传一个&amp;mut Cat就问题很大，因为可能会把Cat改成Dog</p>
+<p>所以简单的从 （Cat是SubType,Animal是SuperType）， 不能推导出 （&amp;mut Cat是SubType,&amp;mut Animal是SuperType）</p>
+<p>那么到底 &amp; T，&amp;mut T的variance和T是什么关系？有三种可能covariant,invariant,contravariant.</p>
+<table><thead><tr><th></th><th></th><th align="center">'a</th><th align="center">T</th><th align="center">U</th></tr></thead><tbody>
+<tr><td>*</td><td><code>&amp;'a T </code></td><td align="center">covariant</td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>&amp;'a mut T</code></td><td align="center">covariant</td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>Box&lt;T&gt;</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>Vec&lt;T&gt;</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>UnsafeCell&lt;T&gt;</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>Cell&lt;T&gt;</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>fn(T) -&gt; U</code></td><td align="center"></td><td align="center"><strong>contra</strong>variant</td><td align="center">covariant</td></tr>
+<tr><td></td><td><code>*const T</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>*mut T</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+</tbody></table>
+<p>用具体的例子：</p>
+<table><thead><tr><th>SubType</th><th>SyperType</th><th>Right？</th></tr></thead><tbody>
+<tr><td>Cat</td><td>Animal</td><td>ok</td></tr>
+<tr><td>&amp;Cat</td><td>&amp;Animal</td><td>ok</td></tr>
+<tr><td>&amp;mut Cat</td><td>&amp;mut Animal</td><td>false</td></tr>
+<tr><td>&amp;mut Animal</td><td>&amp;mut Cat</td><td>false</td></tr>
+<tr><td>Box<Cat></td><td>Box<Animal></td><td>ok</td></tr>
+<tr><td>Vec<Cat></td><td>Vec<Animal></td><td>ok</td></tr>
+<tr><td>Cell<Cat></td><td>Cell<Animal></td><td>false</td></tr>
+<tr><td>Cell<Animal></td><td>Cell<Cat></td><td>false</td></tr>
+</tbody></table>
+<hr />
+<p>我们分析一个在生命周期里运用variance的例子：</p>
+<pre><code>fn replace&lt;T&gt;(x:&amp;mut T,y:&amp;T){
+	*x=y;
+}
+
+fn main(){
+	let mut x:&amp;'staic str=&quot;&quot;;
+	{
+		let y=&quot;hello&quot;;
+		replace(&amp;mut x,&amp;y);
+	}
+}
+</code></pre>
+<p>首先找T的类型。根据x,T只能是 <code>&amp;'static str</code></p>
+<p>然后y的类型需要是是T的subtype</p>
+<p>y的类型是<code>&amp;'static str</code>的subtype</p>
+<p>我们只考虑生命周期这个维度</p>
+<p>y的生命周期是<code>'static</code>  的subtype</p>
+<p>只有比 <code>'static</code>更长的生命周期才能是 <code>'static</code>的subtype</p>
+<p>但显然y的生命周期很短，所以会报错。</p>
+<p>https://doc.rust-lang.org/nomicon/subtyping.html</p>
 
                     </main>
 
