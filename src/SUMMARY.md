@@ -11,3 +11,4 @@
 * [失败的插件开发](失败的插件开发.md)
 * [组合数与排列数](permutation.md)
 * [variance](variances.md)
+* [macro](macro.md)
